@@ -1,3 +1,5 @@
+<img src="Logo.png" alt="Work Cheer" width="112">
+
 # Work Cheer · 上班鼓励器
 
 English · [中文](README.md)
