@@ -94,7 +94,6 @@
   "日薪 ÷ 每日工时 = 时薪。\n「记满一天」会按你填写的日薪估算。": "Hourly rate = daily pay ÷ daily hours.\nFull-day logging uses the daily pay you enter.",
   "关于上班鼓励器": "About Work Cheer",
   "知道了": "Got it",
-  "按你填写的工资和工时估算；数据只保存在本机。": "Estimated from your pay and hours. Saved only on this Mac.",
   "停止计时": "Stop tracking",
   "下班": "Log full day",
   "继续": "Resume",
@@ -109,5 +108,6 @@
   "日薪（元）": "Daily pay (CNY)",
   "这次记录会留在日历里。重新开始后，计时从零算，工资不用再填。": "Keep this session in your calendar and keep your pay settings. Start the next timer from zero.",
   "改完后，这次上班的金额会重新计算，以前的记录不变。": "Changes recalculate the current session only. Other history stays unchanged.",
-  "忍忍，别和钱过不去。\n\n输入工资，点「开始上班」，桌面上就会多一个小窗口，显示今天已经赚了多少钱。\n\n不想上班的时候，看两眼。\n\n累了可以暂停，忘记开计时可以拖进度条补上。点「下班」，按一天工资记。之前的记录在「上班记录」里。\n\n金额是估算的。工资和记录只存在自己电脑上。": "A little earnings window for your desktop. Your hours and estimated pay, at a glance.\n\nSet your pay and daily hours, then start work. Pause for a break, drag the slider to catch up on missed time, and review your month in the calendar.\n\nFree to use. No account. Pay and history stay on this Mac. All amounts are estimates."
+  "忍忍，别和钱过不去。\n\n输入工资，点「开始上班」，桌面上就会多一个小窗口，显示今天已经赚了多少钱。\n\n不想上班的时候，看两眼。\n\n累了可以暂停，忘记开计时可以拖进度条补上。点「下班」，按一天工资记。之前的记录在「上班记录」里。\n\n金额是估算的。工资和记录只存在自己电脑上。\n\n仅供娱乐，不可商用。": "A little earnings window for your desktop. Your hours and estimated pay, at a glance.\n\nSet your pay and daily hours, then start work. Pause for a break, drag the slider to catch up on missed time, and review your month in the calendar.\n\nFree to use. No account. Pay and history stay on this Mac. All amounts are estimates.\n\nFor entertainment only. Commercial use is prohibited.",
+  "按你填写的工资和工时估算；数据只保存在本机。仅供娱乐，不可商用。": "Estimated from your pay and hours. Saved only on this Mac. For entertainment only. Commercial use is prohibited."
 }

@@ -2,6 +2,8 @@
 
 English · [中文](README.md)
 
+**For entertainment only. Commercial use is prohibited.**
+
 ## How much has this workday earned?
 
 **Keep today's pay on your desktop. Hours worked and estimated earnings, at a glance.**

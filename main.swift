@@ -281,7 +281,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         }
         let day = dayPay()
         let earnings = state.fullDay ? day : day*duration/settings.limit
-        view.title.toolTip=L("按你填写的工资和工时估算；数据只保存在本机。")
+        view.title.toolTip=L("按你填写的工资和工时估算；数据只保存在本机。仅供娱乐，不可商用。")
         view.amount.stringValue = String(format: "¥%.3f", earnings)
         view.rates.stringValue = String(format: L("每秒 ¥%.4f    时薪 ¥%.2f    日薪 ¥%.2f"), day/settings.limit, day/settings.dailyHours, day)
         view.elapsed.stringValue = String(format:L("今日已上班 %.2f 小时"),duration/3600)
@@ -348,7 +348,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     @objc func showAbout() {
         let alert=NSAlert();alert.window.appearance=NSAppearance(named:.darkAqua)
         alert.messageText=L("上班鼓励器")
-        alert.informativeText=L("忍忍，别和钱过不去。\n\n输入工资，点「开始上班」，桌面上就会多一个小窗口，显示今天已经赚了多少钱。\n\n不想上班的时候，看两眼。\n\n累了可以暂停，忘记开计时可以拖进度条补上。点「下班」，按一天工资记。之前的记录在「上班记录」里。\n\n金额是估算的。工资和记录只存在自己电脑上。")
+        alert.informativeText=L("忍忍，别和钱过不去。\n\n输入工资，点「开始上班」，桌面上就会多一个小窗口，显示今天已经赚了多少钱。\n\n不想上班的时候，看两眼。\n\n累了可以暂停，忘记开计时可以拖进度条补上。点「下班」，按一天工资记。之前的记录在「上班记录」里。\n\n金额是估算的。工资和记录只存在自己电脑上。\n\n仅供娱乐，不可商用。")
         alert.addButton(withTitle:L("知道了"));alert.runModal()
     }
     @objc func editSalary() { editSettings() }

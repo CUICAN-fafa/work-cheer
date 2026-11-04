@@ -13,7 +13,7 @@ cp Info.plist "$APP/Contents/Info.plist"
 mkdir -p "$APP/Contents/Resources/en.lproj" "$APP/Contents/Resources/zh-Hans.lproj"
 cp InfoPlist.en.strings "$APP/Contents/Resources/en.lproj/InfoPlist.strings"
 cp InfoPlist.zh-Hans.strings "$APP/Contents/Resources/zh-Hans.lproj/InfoPlist.strings"
-cp en.json zh-Hans.json "$APP/Contents/Resources/"
+cp en.json zh-Hans.json NOTICE.txt "$APP/Contents/Resources/"
 codesign --force --deep --sign - "$APP"
 codesign --verify --deep --strict "$APP"
 "$APP/Contents/MacOS/WorkCheer" --self-test
