@@ -66,7 +66,7 @@ final class CalendarView: NSView {
         text(dateText(selected,L("M月d日")) + (daily.isEmpty ? L(" · 暂无打卡记录") : String(format:L(" · %d 次打卡"),daily.count)),NSRect(x:20,y:y,width:500,height:22),13,.white,true)
         if !daily.isEmpty {
             text(String(format:L("计时时长 %@    收入 ¥%.2f"),clock(daily.reduce(0){$0+$1.seconds}),daily.reduce(0){$0+$1.earnings}),NSRect(x:20,y:y+28,width:520,height:22),12,green)
-            text(daily.contains{$0.fullDay} ? L("含全天工资结算；计时时长保留实际记录。") : L("按实际计时时长估算，暂停期间不计费。"),NSRect(x:20,y:y+55,width:520,height:20),11)
+            text(daily.contains{$0.fullDay} ? L("已按一天工资估算，计时时长仍按实际记录。") : L("按实际计时时长估算，暂停期间不计费。"),NSRect(x:20,y:y+55,width:520,height:20),11)
         }
         text(L("记录保存在本机；跨午夜的打卡归入开始日期。"),NSRect(x:20,y:575,width:520,height:20),10)
     }
@@ -119,7 +119,7 @@ final class PaySettingsForm: NSView {
         pay.stringValue=isDaily ? dailyPay:monthlyPay
         for v in [daysLabel,daysChoice,customLabel,days] {v.isHidden=isDaily}
         note.frame.origin.y = isDaily ? 90:12
-        note.stringValue=isDaily ? L("日薪 ÷ 每日小时数 = 时薪。\n手动下班按填写的单日工资结算。"):L("月薪 ÷ 每月工作日 = 日薪；日薪 ÷ 每日小时数 = 时薪。")
+        note.stringValue=isDaily ? L("日薪 ÷ 每日工时 = 时薪。\n「记满一天」会按你填写的日薪估算。"):L("月薪 ÷ 每月工作日 = 日薪；日薪 ÷ 每日小时数 = 时薪。")
         updateDays()
     }
 }

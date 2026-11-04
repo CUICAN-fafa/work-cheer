@@ -1,43 +1,82 @@
 # 上班鼓励器 · Work Cheer
 
-[中文](README.zh-CN.md) · English
+[English](README.en.md) · [中文说明](README.zh-CN.md)
 
-A tiny, always-on-top macOS earnings meter. Big earnings, small distractions.
+## 今天这班，赚到哪了？
 
-![Work Cheer](preview-en.png)
+**把今日工资放在桌面上。工作多久，赚了多少，抬眼就知道。**
 
-## Features
+一个小小的 Mac 工资计价窗：填好月薪或日薪，点「开始上班」，看着今日估算收入慢慢上涨。累了就暂停，收工就记下今天。
 
-- Resizable desktop widget: starts at 360 × 280, shrinks to 160 × 100, or fills your desktop.
-- Monthly salary or daily pay, configurable daily hours and monthly workdays (default: 22).
-- Live earnings, pause/resume, stop at actual earnings, or finish with full-day pay.
-- Drag the progress slider to adjust today's hours, with one-minute precision.
-- Monthly check-in calendar with tracked hours and recorded earnings.
-- Chinese / English UI, including settings, calendar, menus and 20 random quotes.
-- Local-only storage. No account, analytics, networking or salary uploads.
+> 忍忍，别和钱过不去。
 
-## Install
+**[↓ 免费下载 Mac 版](https://github.com/CUICAN-fafa/work-cheer/raw/refs/heads/main/Work-Cheer-Mac.zip)**
 
-Download `Work-Cheer-Mac.zip` from this repository's [download link](Work-Cheer-Mac.zip), unzip it, and move the app into Applications. Requires macOS 12+, Apple silicon or Intel.
+免注册 · 工资只存在本机 · 中文 / English · macOS 12+ · Apple 芯片与 Intel 均支持
 
-This community build is ad-hoc signed and **not Apple-notarized**. macOS may block downloaded copies. The project does not include an Apple Developer certificate.
+![上班鼓励器：桌面右下角的实时工资小窗](preview-zh.png)
 
-## Use
+## 给上班一点看得见的盼头
 
-Open **Settings → Language** to choose Chinese or English. Set monthly salary or daily pay and daily working hours. Start work, then pause, stop, or finish with full-day pay. Drag the slider to correct today's hours; pauses stay paused. The ¥ menu-bar icon provides all actions even in mini mode.
+**抬眼，知道今天赚到哪了。**
+大字显示今日估算收入，旁边是时薪和剩余工时。缩成桌面角落的小窗，偶尔看一眼就好。
 
-Monthly daily pay = monthly salary ÷ configured workdays. Hourly pay = daily pay ÷ configured daily hours. Currency remains CNY in either language. These are estimates, not payroll calculations.
+**想歇就暂停，收工就记满一天。**
+暂停后不累积；「结束计时」保留当前金额；「下班 · 记满一天」按设置的日薪记录全天收入。节奏由你自己定。
 
-Closing the window hides it but does not pause billing. Running sessions count elapsed time while the app is closed, capped at the configured daily hours. Pause or stop before quitting to prevent that. Historical sessions stay unchanged when pay settings change; the current session is recalculated. Overnight sessions belong to the start date. A manual correction on a later day creates a record for today.
+**忘记开工，也能接上今天的进度。**
+拖动进度条，补上已经工作过的小时数。金额和倒计时一起更新，按分钟调整。
 
-## Build and verify
+**这个月上过的班，有处可看。**
+打开「上班日历」，看每天的打卡状态、计时时长和估算收入。重新开工会保留上一条记录。
 
-Install Apple's Xcode Command Line Tools, then run on a Mac:
+**有点幽默，也留点分寸。**
+20 条打工人台词随机出现，不想看这句就「换一句」。小窗可以置顶、拖动、缩小，也可以放大铺满桌面。
+
+## 第一次用，三步就能开工
+
+1. **解压并打开。** 下载压缩包，把「上班鼓励器.app」拖进「应用程序」。
+2. **填好工资。** 在「设置参数」中选择月薪制或日薪制，填写每日工时；月薪制每月工作日默认 22 天，也可手填。
+3. **点「开始上班」。** 收入按你设置的时薪累积。菜单栏「¥」可以找回小窗、切换置顶或调整大小。
+
+当前发布版为本地签名构建，**尚未经过 Apple 公证**，macOS 首次打开可能提示无法验证开发者。这是当前安装体验的限制。
+
+## 你可能想先知道
+
+**这里的钱，怎么算？**
+
+月薪制：日薪 = 月薪 ÷ 每月工作日；日薪制：直接填写单日工资。两种制度的时薪都等于日薪 ÷ 每日工作小时数。金额以人民币显示，属于按工时均摊的估算，不代表实际到账。
+
+**关掉小窗，计时会停吗？**
+
+关闭窗口只会隐藏它。运行中的计时会继续，再次打开时补算经过的时间，上限是你设置的每日工时。想停下来，请先点「暂停」或「结束计时」。
+
+**工资数据会上传吗？**
+
+不会。应用没有账号、联网或分析统计功能，工资和打卡记录只保存在这台 Mac。
+
+**修改工资会影响以前的记录吗？**
+
+只会重算当前面板对应的记录，其他历史不变。跨午夜的记录归入开始日期；面板仍停留在往日时，拖动补卡会保留旧记录，再创建今天的记录。
+
+**Windows 能用吗？**
+
+目前提供 Mac 版，支持 macOS 12 及以上、Apple 芯片和 Intel。界面语言可在「设置参数」里切换。
+
+## 一起把这个小工具做顺手
+
+[反馈问题或提建议](https://github.com/CUICAN-fafa/work-cheer/issues) · [查看英文说明](README.en.md)
+
+欢迎告诉我：哪句台词让你笑了，哪一步操作让你犹豫了。
+
+## 从源码打包
+
+在 Mac 安装 Apple Xcode Command Line Tools，然后运行：
 
 ```sh
 bash build.sh
 ```
 
-This builds a universal binary, signs it locally, runs checks in Chinese and English, and creates `build/Work-Cheer-Mac.zip`. No third-party dependencies are required.
+脚本检查双语配置，构建 Apple 芯片 / Intel 通用应用，完成本地签名和中英文自检，输出 `build/Work-Cheer-Mac.zip`。无需第三方依赖。
 
-Source: `*.swift`. Translations: `zh-Hans.json` and `en.json`. Bundle display names: localized `InfoPlist.*.strings`. Preferences and history live in the local `local.workcheer.meter` defaults domain and are excluded from this repository.
+`*.swift` 为源码；`zh-Hans.json`、`en.json` 为语言配置；`InfoPlist.*.strings` 配置双语应用名。本机数据保存在 `local.workcheer.meter` 偏好域，未纳入仓库。
