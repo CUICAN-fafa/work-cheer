@@ -37,12 +37,12 @@ final class MeterView: NSView {
     let quote = NSTextField(labelWithString: lines.randomElement()!)
     let salary = NSButton(title: L("设置月薪"), target: nil, action: nil)
     let action = NSButton(title: L("开始上班"), target: nil, action: nil)
-    let stop = NSButton(title: L("结束计时"), target: nil, action: nil)
-    let finish = NSButton(title: L("下班 · 记满一天"), target: nil, action: nil)
-    let reset = NSButton(title: L("重新开工"), target: nil, action: nil)
+    let stop = NSButton(title: L("停止计时"), target: nil, action: nil)
+    let finish = NSButton(title: L("下班"), target: nil, action: nil)
+    let reset = NSButton(title: L("重新开始"), target: nil, action: nil)
     let shuffle = NSButton(title: L("换一句 ↻"), target: nil, action: nil)
-    let settingsButton = NSButton(title: L("设置参数"), target: nil, action: nil)
-    let calendarButton = NSButton(title: L("日历"), target: nil, action: nil)
+    let settingsButton = NSButton(title: L("修改工资"), target: nil, action: nil)
+    let calendarButton = NSButton(title: L("上班记录"), target: nil, action: nil)
     let track = PunchSlider(value:0,minValue:0,maxValue:1,target:nil,action:nil)
     var progress: Double = 0 { didSet { if !track.isScrubbing {track.doubleValue=progress} } }
     override init(frame: NSRect) {
@@ -222,14 +222,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         floating.state = .on
         menu.addItem(.separator())
         menu.addItem(withTitle: L("开始 / 暂停 / 继续"), action: #selector(toggle), keyEquivalent: "")
-        menu.addItem(withTitle: L("结束计时"), action: #selector(stop), keyEquivalent: "")
-        menu.addItem(withTitle: L("下班 · 记满一天"), action: #selector(finish), keyEquivalent: "")
+        menu.addItem(withTitle: L("停止计时"), action: #selector(stop), keyEquivalent: "")
+        menu.addItem(withTitle: L("下班"), action: #selector(finish), keyEquivalent: "")
         menu.addItem(withTitle: L("关于上班鼓励器"), action:#selector(showAbout),keyEquivalent:"")
         menu.addItem(withTitle: "中文 / English", action:#selector(editSettings),keyEquivalent:"")
-        menu.addItem(withTitle: L("设置参数"), action: #selector(editSettings), keyEquivalent: "")
-        menu.addItem(withTitle: L("上班日历"), action: #selector(showCalendar), keyEquivalent: "")
+        menu.addItem(withTitle: L("修改工资"), action: #selector(editSettings), keyEquivalent: "")
+        menu.addItem(withTitle: L("上班记录"), action: #selector(showCalendar), keyEquivalent: "")
         menu.addItem(withTitle: L("修改薪资"), action: #selector(editSalary), keyEquivalent: "")
-        menu.addItem(withTitle: L("重新开工"), action: #selector(reset), keyEquivalent: "")
+        menu.addItem(withTitle: L("重新开始"), action: #selector(reset), keyEquivalent: "")
         menu.addItem(.separator())
         menu.addItem(withTitle: L("退出（保留计时状态）"), action: #selector(quit), keyEquivalent: "q")
         for entry in menu.items { entry.target = self }
@@ -289,9 +289,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         view.track.isEnabled = dayPay()>0
         view.remaining.stringValue = L("距下班 ") + clock(state.fullDay ? 0 : settings.limit-duration)
         view.progress = state.fullDay ? 1 : duration/settings.limit
-        view.status.stringValue = ["idle":L("● 准备上班"),"running":L("● 正在赚钱"),"paused":L("● 已暂停"),"stopped":L("● 计时已结束"),"done":L("● 已记满一天")][state.mode] ?? ""
-        view.salary.title = dayPay() > 0 ? String(format: settings.isDaily ? L("日薪 ¥%.2f"):L("月薪 ¥%.0f"), settings.isDaily ? dayPay():state.salary) : L("先填工资 →")
-        view.action.title = ["idle":L("开始上班"),"running":L("暂停"),"paused":L("继续上班"),"stopped":L("已停止"),"done":L("已下班")][state.mode] ?? L("开始上班")
+        view.status.stringValue = ["idle":L("● 准备上班"),"running":L("● 正在赚钱"),"paused":L("● 已暂停"),"stopped":L("● 计时已结束"),"done":L("● 已下班")][state.mode] ?? ""
+        view.salary.title = dayPay() > 0 ? String(format: settings.isDaily ? L("日薪 ¥%.2f"):L("月薪 ¥%.0f"), settings.isDaily ? dayPay():state.salary) : L("输入工资 →")
+        view.action.title = ["idle":L("开始上班"),"running":L("暂停"),"paused":L("继续"),"stopped":L("已停止"),"done":L("已下班")][state.mode] ?? L("开始上班")
         view.action.isEnabled = ["idle","running","paused"].contains(state.mode)
         view.stop.isEnabled = ["running","paused"].contains(state.mode)
         view.finish.isEnabled = dayPay() > 0 && state.mode != "done"
@@ -338,7 +338,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     }
     @objc func reset() {
         if duration() > 0 || state.fullDay {
-            let alert = NSAlert(); alert.messageText = L("重新开工？"); alert.informativeText = L("这次上班会留在日历里，工资设置也会保留。确认后，计时从零开始。"); alert.addButton(withTitle: L("重新开始")); alert.addButton(withTitle: L("取消"))
+            let alert = NSAlert(); alert.messageText = L("要重新开始吗？"); alert.informativeText = L("这次记录会留在日历里。重新开始后，计时从零算，工资不用再填。"); alert.addButton(withTitle: L("重新开始")); alert.addButton(withTitle: L("取消"))
             guard alert.runModal() == .alertFirstButtonReturn else { return }
         }
         if state.mode == "running" || state.mode == "paused" { state.elapsed=duration();state.start=nil;state.mode="stopped" }
@@ -347,14 +347,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     }
     @objc func showAbout() {
         let alert=NSAlert();alert.window.appearance=NSAppearance(named:.darkAqua)
-        alert.messageText=L("今天这班，赚到哪了？")
-        alert.informativeText=L("桌面上的实时工资小窗。工作多久，赚了多少，抬眼就知道。\n\n填好工资和工时，点击「开始上班」。想歇就暂停，忘记开工就拖动进度补卡，结束后去日历看看这月的记录。\n\n免费使用，无需注册。工资和记录只存在这台 Mac 上。显示金额均为估算。")
+        alert.messageText=L("上班鼓励器")
+        alert.informativeText=L("忍忍，别和钱过不去。\n\n输入工资，点「开始上班」，桌面上就会多一个小窗口，显示今天已经赚了多少钱。\n\n不想上班的时候，看两眼。\n\n累了可以暂停，忘记开计时可以拖进度条补上。点「下班」，按一天工资记。之前的记录在「上班记录」里。\n\n金额是估算的。工资和记录只存在自己电脑上。")
         alert.addButton(withTitle:L("知道了"));alert.runModal()
     }
     @objc func editSalary() { editSettings() }
     @objc func editSettings() {
-        let alert=NSAlert();alert.messageText=L("设置参数");alert.window.appearance=NSAppearance(named:.darkAqua)
-        alert.informativeText=L("可随时修改，当前面板对应记录按新参数重新估算；其他历史记录保留。")
+        let alert=NSAlert();alert.messageText=L("修改工资");alert.window.appearance=NSAppearance(named:.darkAqua)
+        alert.informativeText=L("改完后，这次上班的金额会重新计算，以前的记录不变。")
         let form=PaySettingsForm(salary:state.salary,settings:settings)
         alert.accessoryView=form;alert.addButton(withTitle:L("保存"));alert.addButton(withTitle:L("取消"));alert.window.initialFirstResponder=form.pay
         while alert.runModal() == .alertFirstButtonReturn {
@@ -383,12 +383,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         update(view)
         if let root=calendarWindow?.contentView {update(root)}
         for entry in item.menu?.items ?? [] {entry.title=AppLanguage.translateExisting(entry.title)}
-        window.title=L("上班鼓励器");calendarWindow?.title=L("上班日历");updateCalendar()
+        window.title=L("上班鼓励器");calendarWindow?.title=L("上班记录");updateCalendar()
     }
     @objc func showCalendar() {
         if calendarWindow == nil {
             let w=NSWindow(contentRect:NSRect(x:0,y:0,width:580,height:655),styleMask:[.titled,.closable,.miniaturizable],backing:.buffered,defer:false)
-            w.title=L("上班日历");w.isReleasedWhenClosed=false;w.appearance=NSAppearance(named:.darkAqua);w.level = .floating
+            w.title=L("上班记录");w.isReleasedWhenClosed=false;w.appearance=NSAppearance(named:.darkAqua);w.level = .floating
             let root=NSView(frame:NSRect(x:0,y:0,width:580,height:655));w.contentView=root
             let title=NSTextField(labelWithString:"");title.alignment = .center;title.font = .systemFont(ofSize:17,weight:.medium);title.frame=NSRect(x:170,y:615,width:240,height:25);root.addSubview(title);monthTitle=title
             for (text,x,selector) in [(L("‹ 上月"),CGFloat(20),#selector(previousMonth)),(L("本月"),CGFloat(425),#selector(currentMonth)),(L("下月 ›"),CGFloat(490),#selector(nextMonth))] {
@@ -465,7 +465,7 @@ if CommandLine.arguments.contains("--self-test") {
     precondition(savedSettings.isDaily && savedSettings.dailyPay==500)
     let form=PaySettingsForm(salary:22000,settings:MeterSettings())
     form.pay.stringValue="33000";form.mode.selectItem(at:1);form.changePayMode()
-    precondition(form.days.isHidden && form.payLabel.stringValue==L("单日工资（元）"))
+    precondition(form.days.isHidden && form.payLabel.stringValue==L("日薪（元）"))
     form.pay.stringValue="700";form.mode.selectItem(at:0);form.changePayMode()
     precondition(form.pay.stringValue=="33000" && !form.days.isHidden)
     form.mode.selectItem(at:1);form.changePayMode();precondition(form.pay.stringValue=="700")

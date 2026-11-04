@@ -84,7 +84,7 @@ final class PaySettingsForm: NSView {
     let hours = NSTextField(frame: NSRect(x:144,y:162,width:170,height:26))
     let daysChoice = NSPopUpButton(frame:NSRect(x:140,y:118,width:178,height:26))
     let days = NSTextField(frame:NSRect(x:144,y:74,width:170,height:26))
-    let daysLabel = NSTextField(labelWithString:L("每月工作日"))
+    let daysLabel = NSTextField(labelWithString:L("每月上班天数"))
     let customLabel = NSTextField(labelWithString:L("手动工作日（1—31）"))
     let note = NSTextField(wrappingLabelWithString:"")
     var monthlyPay: String
@@ -99,9 +99,9 @@ final class PaySettingsForm: NSView {
         appearance=NSAppearance(named:.darkAqua)
         func label(_ text:String,_ y:CGFloat) { let l=NSTextField(labelWithString:text);l.frame=NSRect(x:0,y:y,width:138,height:24);l.font = .systemFont(ofSize:12);addSubview(l) }
         label(L("界面语言"),294);languageChoice.addItems(withTitles:["简体中文","English"]);languageChoice.selectItem(at:AppLanguage.english ? 1:0);addSubview(languageChoice)
-        label(L("薪资制度"),250);addSubview(mode);mode.addItems(withTitles:[L("月薪制"),L("日薪制")]);mode.selectItem(at:settings.isDaily ? 1:0)
+        label(L("工资怎么算"),250);addSubview(mode);mode.addItems(withTitles:[L("月薪制"),L("日薪制")]);mode.selectItem(at:settings.isDaily ? 1:0)
         payLabel.frame=NSRect(x:0,y:206,width:138,height:24);payLabel.font = .systemFont(ofSize:12);addSubview(payLabel);addSubview(pay)
-        label(L("每日工作时长（小时）"),162);hours.stringValue=String(format:"%g",settings.dailyHours);addSubview(hours)
+        label(L("每天上班几小时"),162);hours.stringValue=String(format:"%g",settings.dailyHours);addSubview(hours)
         daysLabel.frame=NSRect(x:0,y:118,width:138,height:24);daysLabel.font = .systemFont(ofSize:12);addSubview(daysLabel)
         addSubview(daysChoice);daysChoice.addItems(withTitles:[L("常规 · 22 天"),L("手动输入")]);daysChoice.selectItem(at:settings.customDays ? 1:0)
         customLabel.frame=NSRect(x:0,y:74,width:138,height:24);customLabel.font = .systemFont(ofSize:12);addSubview(customLabel);days.stringValue=String(format:"%g",settings.workDays);addSubview(days)
@@ -115,7 +115,7 @@ final class PaySettingsForm: NSView {
     @objc func changePayMode() { capturePay();lastDaily=isDaily;updatePresentation() }
     @objc func updateDays() { days.isEnabled = !isDaily && daysChoice.indexOfSelectedItem==1;customLabel.textColor = days.isEnabled ? .labelColor:.secondaryLabelColor }
     func updatePresentation() {
-        payLabel.stringValue=isDaily ? L("单日工资（元）"):L("月薪（元）")
+        payLabel.stringValue=isDaily ? L("日薪（元）"):L("月薪（元）")
         pay.stringValue=isDaily ? dailyPay:monthlyPay
         for v in [daysLabel,daysChoice,customLabel,days] {v.isHidden=isDaily}
         note.frame.origin.y = isDaily ? 90:12
